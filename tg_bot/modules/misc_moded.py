@@ -40,8 +40,7 @@ def slap(bot: Bot, update: Update, args: List[str]):
     else:
         curr_user = "[{}](tg://user?id={})".format(msg.from_user.first_name, msg.from_user.id)
 
-    user_id = extract_user(update.effective_message, args)
-    if user_id:
+    if user_id := extract_user(update.effective_message, args):
         slapped_user = bot.get_chat(user_id)
         user1 = curr_user
         if slapped_user.username:
@@ -50,7 +49,6 @@ def slap(bot: Bot, update: Update, args: List[str]):
             user2 = "[{}](tg://user?id={})".format(slapped_user.first_name,
                                                    slapped_user.id)
 
-    # if no target found, bot targets the sender
     else:
         user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
         user2 = curr_user
@@ -77,8 +75,7 @@ def get_bot_ip(bot: Bot, update: Update):
 
 @run_async
 def get_id(bot: Bot, update: Update, args: List[str]):
-    user_id = extract_user(update.effective_message, args)
-    if user_id:
+    if user_id := extract_user(update.effective_message, args):
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
